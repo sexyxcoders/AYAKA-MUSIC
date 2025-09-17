@@ -7,17 +7,17 @@ from pyrogram import filters
 load_dotenv()
 
 # Get this value from my.telegram.org/apps
-API_ID = int(getenv("API_ID"))
-API_HASH = getenv("API_HASH")
+API_ID = int(getenv("API_ID","29481920"))
+API_HASH = getenv("API_HASH","f700ddb0930acfab095b00911a2e6f3a")
 
 # Get your token from @BotFather on Telegram.
-BOT_TOKEN = getenv("BOT_TOKEN")
+BOT_TOKEN = getenv("BOT_TOKEN","")
 # -------------------------------------------------------
-OWNER_USERNAME = getenv("OWNER_USERNAME","ll_ALPHA_BABY_lll")
+OWNER_USERNAME = getenv("OWNER_USERNAME","x9Ahad")
 # --------------------------------------------------------
-BOT_USERNAME = getenv("BOT_USERNAME","Sonali_Music_bot")
+BOT_USERNAME = getenv("BOT_USERNAME","AyakaXMusicBot")
 # --------------------------------------------------------
-BOT_NAME = getenv("BOT_NAME")
+BOT_NAME = getenv("BOT_NAME","˹ Ａʏᴀᴋᴀ ꭗ‌ Ｍᴜsɪᴄ  ˼")
 # ---------------------------------------------------------
 
 
@@ -27,10 +27,10 @@ MONGO_DB_URI = getenv("MONGO_DB_URI", None)
 DURATION_LIMIT_MIN = int(getenv("DURATION_LIMIT", 17000))
 
 # Chat id of a group for logging bot's activities
-LOGGER_ID = int(getenv("LOGGER_ID", None))
+LOGGER_ID = int(getenv("LOGGER_ID","-1002847095020"))
 
 # Get this value from @PURVI_HELP_BOT on Telegram by /id
-OWNER_ID = int(getenv("OWNER_ID", 6051510669))
+OWNER_ID = int(getenv("OWNER_ID","8195241636"))
 
 
 ## Fill these variables if you're deploying on heroku.
@@ -41,15 +41,15 @@ HEROKU_API_KEY = getenv("HEROKU_API_KEY")
 
 UPSTREAM_REPO = getenv(
     "UPSTREAM_REPO",
-    "https://github.com/TEAMPURVI/SONALI_MUSIC",
+    "https://github.com/Nobi-123/NISHA-MUSIC",
 )
 UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "master")
 GIT_TOKEN = getenv(
     "GIT_TOKEN", None
 )  # Fill this variable if your upstream repository is private
 
-SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/PURVI_SUPPORT")
-SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/PURVI_UPDATES")
+SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/HamsterUpdatess")
+SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/RichMommmies")
 
 # Set this to True if you want the assistant to automatically leave chats after an interval
 AUTO_LEAVING_ASSISTANT = bool(getenv("AUTO_LEAVING_ASSISTANT", False))
@@ -86,22 +86,18 @@ autoclean = []
 confirmer = {}
 
 
-START_IMG_URL = getenv(
-    "START_IMG_URL", "https://files.catbox.moe/rca1m3.jpg"
-)
-PING_IMG_URL = getenv(
-    "PING_IMG_URL", "https://files.catbox.moe/9cevdg.jpg"
-)
-PLAYLIST_IMG_URL = "https://files.catbox.moe/i493lf.jpg"
-STATS_IMG_URL = "https://files.catbox.moe/i0qmgf.jpg"
-TELEGRAM_AUDIO_URL = "https://telegra.ph/file/8e3552aa743ffdb6f18c9.jpg"
-TELEGRAM_VIDEO_URL = "https://telegra.ph/file/8e3552aa743ffdb6f18c9.jpg"
-STREAM_IMG_URL = "https://te.legra.ph/file/bd995b032b6bd263e2cc9.jpg"
-SOUNCLOUD_IMG_URL = "https://te.legra.ph/file/bb0ff85f2dd44070ea519.jpg"
-YOUTUBE_IMG_URL = "https://te.legra.ph/file/6298d377ad3eb46711644.jpg"
-SPOTIFY_ARTIST_IMG_URL = "https://te.legra.ph/file/37d163a2f75e0d3b403d6.jpg"
-SPOTIFY_ALBUM_IMG_URL = "https://te.legra.ph/file/b35fd1dfca73b950b1b05.jpg"
-SPOTIFY_PLAYLIST_IMG_URL = "https://te.legra.ph/file/95b3ca7993bbfaf993dcb.jpg"
+START_IMG_URL = "https://files.catbox.moe/qgmsa7.jpg"
+PING_IMG_URL = "https://files.catbox.moe/yybpvb.jpg"
+PLAYLIST_IMG_URL = "https://files.catbox.moe/tj7a58.jpg"
+STATS_IMG_URL = "https://files.catbox.moe/yqu9d2.jpg"
+TELEGRAM_AUDIO_URL = "https://files.catbox.moe/a80x63.jpg"
+TELEGRAM_VIDEO_URL = "https://files.catbox.moe/a80x63.jpg"
+STREAM_IMG_URL = "https://files.catbox.moe/lwm506.jpg"
+SOUNCLOUD_IMG_URL = "https://files.catbox.moe/kh9h0n.jpg"
+YOUTUBE_IMG_URL = "https://files.catbox.moe/a80x63.jpg"
+SPOTIFY_ARTIST_IMG_URL = "https://files.catbox.moe/kh9h0n.jpg"
+SPOTIFY_ALBUM_IMG_URL = "https://files.catbox.moe/kh9h0n.jpg"
+SPOTIFY_PLAYLIST_IMG_URL = "https://files.catbox.moe/kh9h0n.jpg"
 
 
 def time_to_seconds(time):
