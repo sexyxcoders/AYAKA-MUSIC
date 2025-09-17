@@ -1,13 +1,12 @@
+import asyncio 
 import time
 import random
 from pyrogram import filters
 from pyrogram.enums import ChatType
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
-from youtubesearchpython.__future__ import VideosSearch
+from pyrogram.types import InlineKeyboardMarkup, Message
 
 from SONALI import app
 from SONALI.misc import _boot_
-from SONALI.plugins.sudo.sudoers import sudoers_list
 from SONALI.utils.database import get_served_chats, get_served_users, get_sudoers
 from SONALI.utils import bot_sys_stats
 from SONALI.utils.database import (
@@ -20,125 +19,79 @@ from SONALI.utils.database import (
 )
 from SONALI.utils.decorators.language import LanguageStart
 from SONALI.utils.formatters import get_readable_time
-from SONALI.utils.inline import help_pannel, private_panel, start_panel
-from config import BANNED_USERS
+from SONALI.utils.inline import private_panel, start_panel
+from config import BANNED_USERS, GREET
 from strings import get_string
 
-# -------------------------------------------------------------------
 
-# Local video paths (make sure these files exist in your repo)
-NEXI_VID = [
-    "SONALI/assets/VID_20250918_032310_160.mp4",
-    "SONALI/assets/VID_20250918_032305_679.mp4",
-    "SONALI/assets/VID_20250918_032303_077.mp4"
+START_VIDS = [
+    "BAACAgUAAxkBAAIoZGjLJkqG7KXOtwjdg-517Y5a0LdWAAI7JAACelNYVqtEqxscnpTGHgQ",
+    "BAACAgUAAxkBAAIoYmjLJi0ZnXdn9Lws5maiSj1s0231AAI5JAACelNYVkaPVJ0IXdaIHgQ",
+    "BAACAgUAAxkBAAIoYGjLJgtN95ogNn0713K7xtAzm0gVAAI4JAACelNYVviTFt5bQXDYHgQ"
 ]
 
-# -------------------------------------------------------------------
-
+# --------------------- PRIVATE START --------------------- #
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
 async def start_pm(client, message: Message, _):
+    loading_1 = await message.reply_text(random.choice(GREET))
     await add_served_user(message.from_user.id)
     await message.react("🍓")
+
+    for dots in ["", ".", "..", "..."]:
+        await loading_1.edit_text(f"<b>ʟᴏᴀᴅɪɴɢ{dots}</b>")
+        await asyncio.sleep(0.1)
+
+    await loading_1.delete()
+
     if len(message.text.split()) > 1:
-        name = message.text.split(None, 1)[1]
-
-        # /start help
-        if name[0:4] == "help":
-            keyboard = help_pannel(_)
-            return await message.reply_video(
-                random.choice(NEXI_VID),
-                caption=_["help_1"].format(config.SUPPORT_CHAT),
-                reply_markup=keyboard,
-            )
-
-        # /start sudo
-        if name[0:3] == "sud":
-            await sudoers_list(client=client, message=message, _=_)
-            if await is_on_off(2):
-                return await app.send_message(
-                    chat_id=config.LOGGER_ID,
-                    text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <b>sᴜᴅᴏʟɪsᴛ</b>.\n\n"
-                         f"<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n"
-                         f"<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
-                )
-            return
-
-        # /start info_<ytid>
-        if name[0:3] == "inf":
-            m = await message.reply_text("🔎")
-            query = (str(name)).replace("info_", "", 1)
-            query = f"https://www.youtube.com/watch?v={query}"
-            results = VideosSearch(query, limit=1)
-
-            for result in (await results.next())["result"]:
-                title = result["title"]
-                duration = result["duration"]
-                views = result["viewCount"]["short"]
-                thumbnail = result["thumbnails"][0]["url"].split("?")[0]
-                channellink = result["channel"]["link"]
-                channel = result["channel"]["name"]
-                link = result["link"]
-                published = result["publishedTime"]
-
-            searched_text = _["start_6"].format(
-                title, duration, views, published, channellink, channel, app.mention
-            )
-            key = InlineKeyboardMarkup(
-                [
-                    [
-                        InlineKeyboardButton(text=_["S_B_8"], url=link),
-                        InlineKeyboardButton(text=_["S_B_9"], url=config.SUPPORT_CHAT),
-                    ],
-                ]
-            )
-            await m.delete()
-            await app.send_photo(
-                chat_id=message.chat.id,
-                photo=thumbnail,
-                caption=searched_text,
-                reply_markup=key,
-            )
-            if await is_on_off(2):
-                return await app.send_message(
-                    chat_id=config.LOGGER_ID,
-                    text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <b>ᴛʀᴀᴄᴋ ɪɴғᴏʀᴍᴀᴛɪᴏɴ</b>.\n\n"
-                         f"<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n"
-                         f"<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
-                )
+        ...
     else:
         out = private_panel(_)
-        await message.reply_video(
-            random.choice(NEXI_VID),
-            caption=_["start_2"].format(message.from_user.mention, app.mention),
-            reply_markup=InlineKeyboardMarkup(out),
-        )
+
+        #await message.reply_sticker(sticker=random.choice(STICKERS))
+
+        async def send_start_panel():
+            await message.reply_video(
+                video=random.choice(START_VIDS),   # file_id from your bot
+                caption=_["start_2"].format(message.from_user.mention,
+                    "", "", "", "", "", ""
+                ),
+                reply_markup=InlineKeyboardMarkup(out),
+            )
+
+        asyncio.create_task(send_start_panel())
+
         if await is_on_off(2):
-            return await app.send_message(
+            await app.send_message(
                 chat_id=config.LOGGER_ID,
-                text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ.\n\n"
-                     f"<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n"
-                     f"<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
+                text=(
+                    f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ.\n\n"
+                    f"<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n"
+                    f"<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}"
+                ),
             )
 
 
-# -------------------------------------------------------------------
-
+# --------------------- GROUP START --------------------- #
 @app.on_message(filters.command(["start"]) & filters.group & ~BANNED_USERS)
 @LanguageStart
 async def start_gp(client, message: Message, _):
     out = start_panel(_)
     uptime = int(time.time() - _boot_)
-    await message.reply_video(
-        random.choice(NEXI_VID),
-        caption=_["start_1"].format(app.mention, get_readable_time(uptime)),
-        reply_markup=InlineKeyboardMarkup(out),
-    )
+
+    async def send_group_panel():
+        await message.reply_video(
+            video=random.choice(START_VIDS),  # file_id from your bot
+            caption=_["start_1"].format(app.mention, get_readable_time(uptime)),
+            reply_markup=InlineKeyboardMarkup(out),
+        )
+
+    asyncio.create_task(send_group_panel())
     return await add_served_chat(message.chat.id)
 
 
-# -------------------------------------------------------------------
-
+# --------------------- WELCOME HANDLER --------------------- #
 @app.on_message(filters.new_chat_members, group=-1)
 async def welcome(client, message: Message):
     for member in message.new_chat_members:
@@ -169,17 +122,31 @@ async def welcome(client, message: Message):
                     return await app.leave_chat(message.chat.id)
 
                 out = start_panel(_)
-                await message.reply_video(
-                    random.choice(NEXI_VID),
-                    caption=_["start_3"].format(
-                        message.from_user.mention,
-                        app.mention,
-                        message.chat.title,
-                        app.mention,
-                    ),
-                    reply_markup=InlineKeyboardMarkup(out),
-                )
+
+                async def send_welcome_panel():
+                    await message.reply_video(
+                        video=random.choice(START_VIDS),
+                        caption=_["start_3"].format(
+                            message.from_user.mention,
+                            app.mention,
+                            message.chat.title,
+                            app.mention,
+                        ),
+                        reply_markup=InlineKeyboardMarkup(out),
+                    )
+
+                asyncio.create_task(send_welcome_panel())
                 await add_served_chat(message.chat.id)
                 await message.stop_propagation()
+
         except Exception as ex:
             print(ex)
+
+
+# --------------------- FILE_ID HELPER --------------------- #
+# Send any video to your bot in private to get its file_id
+@app.on_message(filters.video & filters.private)
+async def get_file_id(client, message: Message):
+    file_id = message.video.file_id
+    print("Video file_id:", file_id)  # also logs in console
+    await message.reply_text(f"✅ Your video file_id:\n<code>{file_id}</code>")
