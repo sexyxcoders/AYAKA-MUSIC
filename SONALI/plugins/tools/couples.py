@@ -14,8 +14,8 @@ from SONALI.mongo.couples_db import _get_image, get_couple
 POLICE = [
     [
         InlineKeyboardButton(
-            text="|| ˹𖤍 𝗔𝗟𝗣𝗛𝗔 𖤍˼ ||",
-            url=f"https://t.me/PURVI_SUPPORT",
+            text="˹ Ａʏᴧᴋᴧ ꭗ‌ Ｍᴜ𝛅ɪᴄ  ˼",
+            url=f"https://t.me/HamsterUpdatess",
         ),
     ],
 ]
@@ -154,14 +154,3 @@ __mod__ = "COUPLES"
 __help__ = """
 **» /couples** - Get Todays Couples Of The Group In Interactive View
 """
-
-
-
-
-
-    
-
-
-
-
-    
