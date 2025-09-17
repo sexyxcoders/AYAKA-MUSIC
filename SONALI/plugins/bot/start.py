@@ -30,7 +30,6 @@ from strings import get_string
 
 NEXI_VID = [
 "https://files.catbox.moe/cxp1ij.mp4",
-"https://files.catbox.moe/va1md3.jpg",
 "https://files.catbox.moe/7s6wl9.mp4"
 "https://files.catbox.moe/rvmmsf.mp4",
 "https://files.catbox.moe/d17s9y.mp4"
