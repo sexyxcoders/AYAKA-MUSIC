@@ -26,19 +26,12 @@ from strings import get_string
 
 # -------------------------------------------------------------------
 
-# Replace these file_ids with your actual video file_ids
+# Local video paths (make sure these files exist in your repo)
 NEXI_VID = [
-    "BAACAgUAAxkBAAIoYGjLJgtN95ogNn0713K7xtAzm0gVAAI4JAACelNYVviTFt5bQXDYHgQ",
-    "BAACAgUAAxkBAAIoYmjLJi0ZnXdn9Lws5maiSj1s0231AAI5JAACelNYVkaPVJ0IXdaIHgQ",
-    "BAACAgUAAxkBAAIoZGjLJkqG7KXOtwjdg-517Y5a0LdWAAI7JAACelNYVqtEqxscnpTGHgQ"
+    "SONALI/assets/VID_20250918_032310_160.mp4",
+    "SONALI/assets/VID_20250918_032305_679.mp4",
+    "SONALI/assets/VID_20250918_032303_077.mp4"
 ]
-
-
-# Helper: Upload a video & get its file_id easily
-@app.on_message(filters.video & filters.private)
-async def get_file_id(client, message: Message):
-    await message.reply_text(f"Video File ID:\n`{message.video.file_id}`")
-
 
 # -------------------------------------------------------------------
 
