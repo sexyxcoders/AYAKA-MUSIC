@@ -29,13 +29,11 @@ from strings import get_string
 #--------------------------
 
 NEXI_VID = [
-"https://telegra.ph/file/1a3c152717eb9d2e94dc2.mp4",
-"https://files.catbox.moe/ln00jb.mp4",
-"https://graph.org/file/83ebf52e8bbf138620de7.mp4",
-"https://files.catbox.moe/0fq20c.mp4",
-"https://graph.org/file/318eac81e3d4667edcb77.mp4",
-"https://graph.org/file/7c1aa59649fbf3ab422da.mp4",
-"https://files.catbox.moe/t0nepm.mp4",
+"https://files.catbox.moe/cxp1ij.mp4",
+"https://files.catbox.moe/va1md3.jpg",
+"https://files.catbox.moe/7s6wl9.mp4"
+"https://files.catbox.moe/rvmmsf.mp4",
+"https://files.catbox.moe/d17s9y.mp4"
 
 ]
 
@@ -45,6 +43,7 @@ NEXI_VID = [
 @LanguageStart
 async def start_pm(client, message: Message, _):
     await add_served_user(message.from_user.id)
+    await message.react("🍓")
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
         if name[0:4] == "help":
