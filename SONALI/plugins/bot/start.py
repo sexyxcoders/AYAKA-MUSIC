@@ -5,8 +5,6 @@ from pyrogram.enums import ChatType
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 from youtubesearchpython.__future__ import VideosSearch
 
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto
-import config
 from SONALI import app
 from SONALI.misc import _boot_
 from SONALI.plugins.sudo.sudoers import sudoers_list
@@ -26,16 +24,24 @@ from SONALI.utils.inline import help_pannel, private_panel, start_panel
 from config import BANNED_USERS
 from strings import get_string
 
-#--------------------------
+# -------------------------------------------------------------------
 
+# Replace these file_ids with your actual video file_ids
 NEXI_VID = [
-"https://files.catbox.moe/cxp1ij.mp4",
-"https://files.catbox.moe/7s6wl9.mp4",
-"https://files.catbox.moe/rvmmsf.mp4",
-"https://files.catbox.moe/d17s9y.mp4"
+    "BAACAgUAAxkBAAIIuWjLIFIKqKywZE_yEWiR3cBn2xBDAAI4JAACelNYVvDuSMjKtlyPHgQ",
+    "BAACAgUAAxkBAAIIu2jLIGxXIweFAkL9eCmqLfxPH3MoAAI5JAACelNYVlW01G1L-hqDHgQ",
+    "BAACAgUAAxkBAAIIvWjLII28CA4NTfadiYYk2FtDrEMPAAI6JAACelNYVtZ32lUS3MffHgQ",
+    "BAACAgUAAxkBAAIIv2jLILZ_17CHHTZRbPmeJgh3BLyhAAI7JAACelNYVtYMG_nCoqf9HgQ"
 ]
 
 
+# Helper: Upload a video & get its file_id easily
+@app.on_message(filters.video & filters.private)
+async def get_file_id(client, message: Message):
+    await message.reply_text(f"Video File ID:\n`{message.video.file_id}`")
+
+
+# -------------------------------------------------------------------
 
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
@@ -44,6 +50,8 @@ async def start_pm(client, message: Message, _):
     await message.react("🍓")
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
+
+        # /start help
         if name[0:4] == "help":
             keyboard = help_pannel(_)
             return await message.reply_video(
@@ -51,19 +59,26 @@ async def start_pm(client, message: Message, _):
                 caption=_["help_1"].format(config.SUPPORT_CHAT),
                 reply_markup=keyboard,
             )
+
+        # /start sudo
         if name[0:3] == "sud":
             await sudoers_list(client=client, message=message, _=_)
             if await is_on_off(2):
                 return await app.send_message(
                     chat_id=config.LOGGER_ID,
-                    text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <b>sᴜᴅᴏʟɪsᴛ</b>.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
+                    text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <b>sᴜᴅᴏʟɪsᴛ</b>.\n\n"
+                         f"<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n"
+                         f"<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
                 )
             return
+
+        # /start info_<ytid>
         if name[0:3] == "inf":
             m = await message.reply_text("🔎")
             query = (str(name)).replace("info_", "", 1)
             query = f"https://www.youtube.com/watch?v={query}"
             results = VideosSearch(query, limit=1)
+
             for result in (await results.next())["result"]:
                 title = result["title"]
                 duration = result["duration"]
@@ -73,6 +88,7 @@ async def start_pm(client, message: Message, _):
                 channel = result["channel"]["name"]
                 link = result["link"]
                 published = result["publishedTime"]
+
             searched_text = _["start_6"].format(
                 title, duration, views, published, channellink, channel, app.mention
             )
@@ -94,7 +110,9 @@ async def start_pm(client, message: Message, _):
             if await is_on_off(2):
                 return await app.send_message(
                     chat_id=config.LOGGER_ID,
-                    text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <b>ᴛʀᴀᴄᴋ ɪɴғᴏʀᴍᴀᴛɪᴏɴ</b>.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
+                    text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <b>ᴛʀᴀᴄᴋ ɪɴғᴏʀᴍᴀᴛɪᴏɴ</b>.\n\n"
+                         f"<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n"
+                         f"<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
                 )
     else:
         out = private_panel(_)
@@ -106,9 +124,13 @@ async def start_pm(client, message: Message, _):
         if await is_on_off(2):
             return await app.send_message(
                 chat_id=config.LOGGER_ID,
-                text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
+                text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ.\n\n"
+                     f"<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n"
+                     f"<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
             )
 
+
+# -------------------------------------------------------------------
 
 @app.on_message(filters.command(["start"]) & filters.group & ~BANNED_USERS)
 @LanguageStart
@@ -123,21 +145,26 @@ async def start_gp(client, message: Message, _):
     return await add_served_chat(message.chat.id)
 
 
+# -------------------------------------------------------------------
+
 @app.on_message(filters.new_chat_members, group=-1)
 async def welcome(client, message: Message):
     for member in message.new_chat_members:
         try:
             language = await get_lang(message.chat.id)
             _ = get_string(language)
+
             if await is_banned_user(member.id):
                 try:
                     await message.chat.ban_member(member.id)
                 except:
                     pass
+
             if member.id == app.id:
                 if message.chat.type != ChatType.SUPERGROUP:
                     await message.reply_text(_["start_4"])
                     return await app.leave_chat(message.chat.id)
+
                 if message.chat.id in await blacklisted_chats():
                     await message.reply_text(
                         _["start_5"].format(
