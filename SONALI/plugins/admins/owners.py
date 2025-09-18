@@ -1,6 +1,6 @@
 from pyrogram import filters
 from SONALI import app
-from SONALI import config   # if config.py exists
+import SONALI.config as config   # fixed import
 from SONALI.utils.clone_manager import start_clone, stop_clone
 
 
