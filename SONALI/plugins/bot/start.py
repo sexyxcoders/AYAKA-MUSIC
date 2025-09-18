@@ -1,6 +1,7 @@
 import asyncio 
 import time
 import random
+import config
 from config import LOGGER_ID, BANNED_USERS, GREET, SUPPORT_CHAT
 from pyrogram import filters
 from pyrogram.enums import ChatType
