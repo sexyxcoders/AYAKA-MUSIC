@@ -17,7 +17,7 @@ async def start_clone(bot_token: str, api_id: int, api_hash: str):
             api_id=api_id,
             api_hash=api_hash,
             bot_token=bot_token,
-            plugins=dict(root="IvanxMusic")  # your main plugins folder
+            plugins=dict(root="SONALI")  # your main plugins folder
         )
 
         await client.start()
