@@ -88,9 +88,9 @@ confirmer = {}
 GREET = [ "💌", "❣️", "❤️" ]
 
 START_IMG_URL = "https://files.catbox.moe/we2hw5.jpg"
-PING_IMG_URL = "https://files.catbox.moe/yybpvb.jpg"
+PING_IMG_URL = "https://files.catbox.moe/zywku1.jpg"
 PLAYLIST_IMG_URL = "https://files.catbox.moe/tj7a58.jpg"
-STATS_IMG_URL = "https://files.catbox.moe/yqu9d2.jpg"
+STATS_IMG_URL = "https://files.catbox.moe/jdwd10.jpg"
 TELEGRAM_AUDIO_URL = "https://files.catbox.moe/a80x63.jpg"
 TELEGRAM_VIDEO_URL = "https://files.catbox.moe/a80x63.jpg"
 STREAM_IMG_URL = "https://files.catbox.moe/lwm506.jpg"
