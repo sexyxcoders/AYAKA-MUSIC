@@ -1,6 +1,7 @@
 import asyncio 
 import time
 import random
+import config
 from pyrogram import filters
 from pyrogram.enums import ChatType
 from pyrogram.types import InlineKeyboardMarkup, Message
@@ -20,7 +21,6 @@ from SONALI.utils.database import (
 from SONALI.utils.decorators.language import LanguageStart
 from SONALI.utils.formatters import get_readable_time
 from SONALI.utils.inline import private_panel, start_panel
-from config
 from strings import get_string
 
 
