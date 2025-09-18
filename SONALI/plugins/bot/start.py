@@ -56,7 +56,7 @@ async def start_pm(client, message: Message, _):
 
         async def send_start_panel():
             await message.reply_photo(
-                photo=START_IMAGE_URL,
+                photo=START_IMG_URL,
                 caption=_["start_2"].format(
                     message.from_user.mention, "", "", "", "", "", ""
                 ),
@@ -88,7 +88,7 @@ async def start_gp(client, message: Message, _):
 
     async def send_group_panel():
         await message.reply_photo(
-            photo=START_IMAGE_URL,
+            photo=START_IMG_URL,
             caption=_["start_1"].format(app.mention, get_readable_time(uptime)),
             reply_markup=InlineKeyboardMarkup(out),
             has_spoiler=True,  # 👈 spoiler effect on image
@@ -134,7 +134,7 @@ async def welcome(client, message: Message):
 
                 async def send_welcome_panel():
                     await message.reply_photo(
-                        photo=START_IMAGE_URL,
+                        photo=START_IMG_URL,
                         caption=_["start_3"].format(
                             message.from_user.mention,
                             app.mention,
