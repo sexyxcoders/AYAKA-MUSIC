@@ -1,9 +1,12 @@
 aiofiles
 aiohttp
+#asyncio==3.4.3
+asyncio
 beautifulsoup4
 dnspython
 ffmpeg-python
 future==0.18.3
+search_engine_parser
 telethon==1.33.1
 gitpython
 httpx[http2]
@@ -12,10 +15,6 @@ hachoir
 motor==3.3.2
 pillow==9.5.0
 psutil
-google-api-python-client
-openai>=1.0.0
-deepai
-edge-tts
 py-tgcalls==0.9.7
 pykeyboard
 pymongo==4.6.3
@@ -27,7 +26,9 @@ SafoneAPI==1.0.65
 tgcrypto
 gpytranslate
 MukeshAPI
+search_engine_parser
 googlesearch-python
+youtube-search-python
 spotipy
 telegraph
 speedtest-cli
