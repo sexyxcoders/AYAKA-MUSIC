@@ -1,7 +1,7 @@
 import asyncio 
 import time
 import random
-import config
+from config import LOGGER_ID, BANNED_USERS
 from pyrogram import filters
 from pyrogram.enums import ChatType
 from pyrogram.types import InlineKeyboardMarkup, Message
