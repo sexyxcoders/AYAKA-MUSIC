@@ -59,40 +59,73 @@ async def update_(client, message, _):
     if await is_heroku():
         if HAPP is None:
             return await message.reply_text(_["server_2"])
+
     response = await message.reply_text(_["server_3"])
+
     try:
-        repo = Repo()
+        # explicitly point Repo to current directory
+        repo = Repo(os.getcwd())   # ✅ fixed
     except GitCommandError:
         return await response.edit(_["server_4"])
     except InvalidGitRepositoryError:
-        return await response.edit(_["server_5"])
-    to_exc = f"git fetch origin {config.UPSTREAM_BRANCH} &> /dev/null"
-    os.system(to_exc)
-    await asyncio.sleep(7)
-    verification = ""
-    REPO_ = repo.remotes.origin.url.split(".git")[0]
-    for checks in repo.iter_commits(f"HEAD..origin/{config.UPSTREAM_BRANCH}"):
-        verification = str(checks.count())
-    if verification == "":
-        return await response.edit(_["server_6"])
+        return await response.edit(
+            "⚠️ This folder is not a valid git repository.\n\n"
+            "Make sure you deployed the bot using `git clone` "
+            "and not by uploading a zip."
+        )
+
+    # fetch latest commits
+    try:
+        repo.git.fetch("origin", config.UPSTREAM_BRANCH)
+    except Exception as e:
+        return await response.edit(f"❌ Git fetch failed:\n<code>{str(e)}</code>")
+
+    # check for new commits
+    commits = list(repo.iter_commits(f"HEAD..origin/{config.UPSTREAM_BRANCH}"))
+    if not commits:
+        return await response.edit(_["server_6"])  # no updates available
+
     updates = ""
     ordinal = lambda format: "%d%s" % (
         format,
         "tsnrhtdd"[(format // 10 % 10 != 1) * (format % 10 < 4) * format % 10 :: 4],
     )
-    for info in repo.iter_commits(f"HEAD..origin/{config.UPSTREAM_BRANCH}"):
-        updates += f"<b>➣ #{info.count()}: <a href={REPO_}/commit/{info}>{info.summary}</a> ʙʏ -> {info.author}</b>\n\t\t\t\t<b>➥ ᴄᴏᴍᴍɪᴛᴇᴅ ᴏɴ :</b> {ordinal(int(datetime.fromtimestamp(info.committed_date).strftime('%d')))} {datetime.fromtimestamp(info.committed_date).strftime('%b')}, {datetime.fromtimestamp(info.committed_date).strftime('%Y')}\n\n"
-    _update_response_ = "<b>ᴀ ɴᴇᴡ ᴜᴩᴅᴀᴛᴇ ɪs ᴀᴠᴀɪʟᴀʙʟᴇ ғᴏʀ ᴛʜᴇ ʙᴏᴛ !</b>\n\n➣ ᴩᴜsʜɪɴɢ ᴜᴩᴅᴀᴛᴇs ɴᴏᴡ\n\n<b><u>ᴜᴩᴅᴀᴛᴇs:</u></b>\n\n"
+    REPO_ = repo.remotes.origin.url.split(".git")[0]
+
+    for info in commits:
+        updates += (
+            f"<b>➣ #{info.count()}: <a href={REPO_}/commit/{info}>{info.summary}</a> "
+            f"ʙʏ -> {info.author}</b>\n"
+            f"\t<b>➥ ᴄᴏᴍᴍɪᴛᴇᴅ ᴏɴ :</b> "
+            f"{ordinal(int(datetime.fromtimestamp(info.committed_date).strftime('%d')))} "
+            f"{datetime.fromtimestamp(info.committed_date).strftime('%b %Y')}\n\n"
+        )
+
+    _update_response_ = (
+        "<b>ᴀ ɴᴇᴡ ᴜᴩᴅᴀᴛᴇ ɪs ᴀᴠᴀɪʟᴀʙʟᴇ ғᴏʀ ᴛʜᴇ ʙᴏᴛ !</b>\n\n"
+        "➣ ᴩᴜsʜɪɴɢ ᴜᴩᴅᴀᴛᴇs ɴᴏᴡ\n\n"
+        "<b><u>ᴜᴩᴅᴀᴛᴇs:</u></b>\n\n"
+    )
     _final_updates_ = _update_response_ + updates
+
     if len(_final_updates_) > 4096:
         url = await RAUSHANBin(updates)
         nrs = await response.edit(
-            f"<b>ᴀ ɴᴇᴡ ᴜᴩᴅᴀᴛᴇ ɪs ᴀᴠᴀɪʟᴀʙʟᴇ ғᴏʀ ᴛʜᴇ ʙᴏᴛ !</b>\n\n➣ ᴩᴜsʜɪɴɢ ᴜᴩᴅᴀᴛᴇs ɴᴏᴡ\n\n<u><b>ᴜᴩᴅᴀᴛᴇs :</b></u>\n\n<a href={url}>ᴄʜᴇᴄᴋ ᴜᴩᴅᴀᴛᴇs</a>"
+            f"<b>ᴀ ɴᴇᴡ ᴜᴩᴅᴀᴛᴇ ɪs ᴀᴠᴀɪʟᴀʙʟᴇ ғᴏʀ ᴛʜᴇ ʙᴏᴛ !</b>\n\n"
+            f"➣ ᴩᴜsʜɪɴɢ ᴜᴩᴅᴀᴛᴇs ɴᴏᴡ\n\n"
+            f"<u><b>ᴜᴩᴅᴀᴛᴇs :</b></u>\n\n<a href={url}>ᴄʜᴇᴄᴋ ᴜᴩᴅᴀᴛᴇs</a>"
         )
     else:
         nrs = await response.edit(_final_updates_, disable_web_page_preview=True)
-    os.system("git stash &> /dev/null && git pull")
 
+    # pull updates safely
+    try:
+        repo.git.stash("save")
+        repo.git.pull("origin", config.UPSTREAM_BRANCH)
+    except Exception as e:
+        return await response.edit(f"❌ Git pull failed:\n<code>{str(e)}</code>")
+
+    # notify active chats and restart
     try:
         served_chats = await get_active_chats()
         for x in served_chats:
