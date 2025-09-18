@@ -1,5 +1,4 @@
 from typing import Union
-
 from pyrogram.types import InlineKeyboardButton
 
 
@@ -27,7 +26,7 @@ def vote_mode_markup(_, current, mode: Union[bool, str] = None):
         [
             InlineKeyboardButton(text="Vᴏᴛɪɴɢ ᴍᴏᴅᴇ ➜", callback_data="VOTEANSWER"),
             InlineKeyboardButton(
-                text=_["ST_B_5"] if mode == True else _["ST_B_6"],
+                text=_["ST_B_5"] if mode is True else _["ST_B_6"],
                 callback_data="VOMODECHANGE",
             ),
         ],
@@ -55,7 +54,7 @@ def auth_users_markup(_, status: Union[bool, str] = None):
         [
             InlineKeyboardButton(text=_["ST_B_7"], callback_data="AUTHANSWER"),
             InlineKeyboardButton(
-                text=_["ST_B_8"] if status == True else _["ST_B_9"],
+                text=_["ST_B_8"] if status is True else _["ST_B_9"],
                 callback_data="AUTH",
             ),
         ],
@@ -83,21 +82,21 @@ def playmode_users_markup(
         [
             InlineKeyboardButton(text=_["ST_B_10"], callback_data="SEARCHANSWER"),
             InlineKeyboardButton(
-                text=_["ST_B_11"] if Direct == True else _["ST_B_12"],
+                text=_["ST_B_11"] if Direct is True else _["ST_B_12"],
                 callback_data="MODECHANGE",
             ),
         ],
         [
             InlineKeyboardButton(text=_["ST_B_13"], callback_data="AUTHANSWER"),
             InlineKeyboardButton(
-                text=_["ST_B_8"] if Group == True else _["ST_B_9"],
+                text=_["ST_B_8"] if Group is True else _["ST_B_9"],
                 callback_data="CHANNELMODECHANGE",
             ),
         ],
         [
             InlineKeyboardButton(text=_["ST_B_14"], callback_data="PLAYTYPEANSWER"),
             InlineKeyboardButton(
-                text=_["ST_B_8"] if Playtype == True else _["ST_B_9"],
+                text=_["ST_B_8"] if Playtype is True else _["ST_B_9"],
                 callback_data="PLAYTYPECHANGE",
             ),
         ],
@@ -109,8 +108,10 @@ def playmode_users_markup(
             InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close"),
         ],
     ]
+    return buttons
 
-    def aq_markup(_, chat_id):
+
+def aq_markup(_, chat_id):
     buttons = [
         [
             InlineKeyboardButton(text="▷", callback_data=f"ADMIN Resume|{chat_id}"),
