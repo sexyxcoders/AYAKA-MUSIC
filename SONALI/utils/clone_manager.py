@@ -1,25 +1,53 @@
-from pyrogram import filters
-from SONALI import app
-import config
-from SONALI.clone_manager import start_clone, stop_clone
+# SONALI/utils/clone_manager.py
+
+import asyncio
+from pyrogram import Client
+
+# Dictionary to store running clone clients
+running_clones = {}
+
+async def start_clone(token: str, api_id: int, api_hash: str) -> str:
+    """
+    Starts a new Pyrogram client instance with the given BOT_TOKEN.
+    Returns a status message.
+    """
+    if token in running_clones:
+        return f"A clone with this token is already running."
+
+    try:
+        # Create a new Pyrogram client
+        clone_client = Client(
+            name=f"clone_{token[-5:]}",
+            api_id=api_id,
+            api_hash=api_hash,
+            bot_token=token
+        )
+
+        # Start the client asynchronously
+        await clone_client.start()
+
+        # Store it in the running clones dictionary
+        running_clones[token] = clone_client
+        return f"✅ Clone started successfully for token ending with `{token[-5:]}`."
+
+    except Exception as e:
+        return f"❌ Failed to start clone: {e}"
 
 
-@app.on_message(filters.command("clone") & filters.user(config.OWNER_ID))
-async def clone_handler(client, message):
-    if len(message.command) < 2:
-        return await message.reply_text("Usage: /clone <BOT_TOKEN>")
+async def stop_clone(token: str) -> str:
+    """
+    Stops a running Pyrogram client instance.
+    Returns a status message.
+    """
+    clone_client = running_clones.get(token)
+    if not clone_client:
+        return f"No running clone found for this token."
 
-    token = message.command[1]
-    msg = await start_clone(token, config.API_ID, config.API_HASH)
-    await message.reply_text(msg)
-
-
-@app.on_message(filters.command("stopclone") & filters.user(config.OWNER_ID))
-async def stopclone_handler(client, message):
-    if len(message.command) < 2:
-        return await message.reply_text("Usage: /stopclone <BOT_TOKEN>")
-
-    token = message.command[1]
-    msg = await stop_clone(token)
-    await message.reply_text(msg)
-  
+    try:
+        # Stop the client asynchronously
+        await clone_client.stop()
+        # Remove from the dictionary
+        running_clones.pop(token)
+        return f"✅ Clone stopped successfully for token ending with `{token[-5:]}`."
+    except Exception as e:
+        return f"❌ Failed to stop clone: {e}"
