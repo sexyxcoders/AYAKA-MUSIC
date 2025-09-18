@@ -31,20 +31,19 @@ from strings import get_string
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
 async def start_pm(client, message: Message, _):
-    # Send loading animation
+    # Loading message instead of reactions
     loading_1 = await message.reply_text(random.choice(GREET))
     await add_served_user(message.from_user.id)
 
-    # Multiple random reactions 🍓
-    reactions = ["🍓", "✨", "🌸", "💎", "🌹", "🍫"]
-    for reaction in random.sample(reactions, k=3):  # send 3 random reactions
-        await message.react(reaction)
-        await asyncio.sleep(0.3)
+    # Replace reactions with text from en.yml → start_1
+    language = await get_lang(message.chat.id)
+    __ = get_string(language)
+    await message.reply_text(__["start_1"])
 
+    # Show "loading..." animation
     for dots in ["", ".", "..", "..."]:
         await loading_1.edit_text(f"<b>ʟᴏᴀᴅɪɴɢ{dots}</b>")
         await asyncio.sleep(0.1)
-
     await loading_1.delete()
 
     # Start command with args
@@ -55,7 +54,7 @@ async def start_pm(client, message: Message, _):
 
         async def send_start_panel():
             await message.reply_photo(
-                photo=START_IMAGE,
+                photo=START_IMG_URL,
                 caption=_["start_2"].format(
                     message.from_user.mention, "", "", "", "", "", ""
                 ),
@@ -86,10 +85,10 @@ async def start_gp(client, message: Message, _):
 
     async def send_group_panel():
         await message.reply_photo(
-            photo=START_IMAGE,
+            photo=START_IMG_URL,
             caption=_["start_1"].format(app.mention, get_readable_time(uptime)),
             reply_markup=InlineKeyboardMarkup(out),
-            has_spoiler=True,  # 👈 spoiler effect on image
+            has_spoiler=True,
         )
 
     asyncio.create_task(send_group_panel())
@@ -132,7 +131,7 @@ async def welcome(client, message: Message):
 
                 async def send_welcome_panel():
                     await message.reply_photo(
-                        photo=START_IMAGE,
+                        photo=START_IMG_URL,
                         caption=_["start_3"].format(
                             message.from_user.mention,
                             app.mention,
@@ -140,7 +139,7 @@ async def welcome(client, message: Message):
                             app.mention,
                         ),
                         reply_markup=InlineKeyboardMarkup(out),
-                        has_spoiler=True,  # 👈 spoiler effect on image
+                        has_spoiler=True,
                     )
 
                 asyncio.create_task(send_welcome_panel())
