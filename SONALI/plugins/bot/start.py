@@ -2,7 +2,7 @@ import asyncio
 import time
 import random
 import config
-from config import LOGGER_ID, BANNED_USERS, GREET, SUPPORT_CHAT, START_IMG_URL
+from config import LOGGER_ID, BANNED_USERS, SUPPORT_CHAT, START_IMG_URL, GREET
 from pyrogram import filters
 from pyrogram.enums import ChatType
 from pyrogram.types import InlineKeyboardMarkup, Message
@@ -26,26 +26,28 @@ from SONALI.utils.formatters import get_readable_time
 from SONALI.utils.inline import private_panel, start_panel
 from strings import get_string
 
+EFFECT_ID = [
+    5046509860389126442,
+    5107584321108051014,
+    5104841245755180586,
+    5159385139981059251,
+]
+
 
 # --------------------- PRIVATE START --------------------- #
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
 async def start_pm(client, message: Message, _):
-    # Loading message instead of reactions
     loading_1 = await message.reply_text(random.choice(GREET))
     await add_served_user(message.from_user.id)
+    await message.react("🍓")
 
-    # Replace reactions with text from en.yml → start_1
-    language = await get_lang(message.chat.id)
-    __ = get_string(language)
-    await message.reply_text(__["start_1"])
-
-    # Show "loading..." animation
     for dots in ["", ".", "..", "..."]:
         await loading_1.edit_text(f"<b>ʟᴏᴀᴅɪɴɢ{dots}</b>")
         await asyncio.sleep(0.1)
-    await loading_1.delete()
 
+    await loading_1.delete()
+    
     # Start command with args
     if len(message.text.split()) > 1:
         ...
@@ -54,11 +56,12 @@ async def start_pm(client, message: Message, _):
 
         async def send_start_panel():
             await message.reply_photo(
-                photo=START_IMG_URL,
+                photo=START_IMAGE_URL,
                 caption=_["start_2"].format(
                     message.from_user.mention, "", "", "", "", "", ""
                 ),
                 reply_markup=InlineKeyboardMarkup(out),
+                message_effect_id=random.choice(EFFECT_ID),
                 has_spoiler=True,  # 👈 spoiler effect on image
             )
 
@@ -85,10 +88,10 @@ async def start_gp(client, message: Message, _):
 
     async def send_group_panel():
         await message.reply_photo(
-            photo=START_IMG_URL,
+            photo=START_IMAGE_URL,
             caption=_["start_1"].format(app.mention, get_readable_time(uptime)),
             reply_markup=InlineKeyboardMarkup(out),
-            has_spoiler=True,
+            has_spoiler=True,  # 👈 spoiler effect on image
         )
 
     asyncio.create_task(send_group_panel())
@@ -131,7 +134,7 @@ async def welcome(client, message: Message):
 
                 async def send_welcome_panel():
                     await message.reply_photo(
-                        photo=START_IMG_URL,
+                        photo=START_IMAGE_URL,
                         caption=_["start_3"].format(
                             message.from_user.mention,
                             app.mention,
@@ -139,7 +142,7 @@ async def welcome(client, message: Message):
                             app.mention,
                         ),
                         reply_markup=InlineKeyboardMarkup(out),
-                        has_spoiler=True,
+                        has_spoiler=True,  # 👈 spoiler effect on image
                     )
 
                 asyncio.create_task(send_welcome_panel())
