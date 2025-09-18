@@ -20,7 +20,7 @@ from SONALI.utils.database import (
 from SONALI.utils.decorators.language import LanguageStart
 from SONALI.utils.formatters import get_readable_time
 from SONALI.utils.inline import private_panel, start_panel
-from config import BANNED_USERS, GREET
+from config
 from strings import get_string
 
 
