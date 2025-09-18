@@ -15,6 +15,10 @@ hachoir
 motor==3.3.2
 pillow==9.5.0
 psutil
+google-api-python-client
+openai>=1.0.0
+deepai
+edge-tts
 py-tgcalls==0.9.7
 pykeyboard
 pymongo==4.6.3
