@@ -50,6 +50,13 @@ async def download_instagram_video(client, message):
         except Exception:
             return await message.reply_text("Fᴀɪʟᴇᴅ ᴛᴏ ᴅᴏᴡɴʟᴏᴀᴅ ʀᴇᴇʟ")
 
+@app.on_message(filters.regex(r"(https?://(?:www\.)?(?:instagram\.com|instagr\.am)/\S+)"))
+async def insta_download_auto(client: Client, message: Message):
+    match = re.search(r"(https?://(?:www\.)?(?:instagram\.com|instagr\.am)/\S+)", message.text)
+    if match:
+        instagram_url = match.group(1)
+        await send_instagram_media(message, instagram_url)
+
 
 MODULE = "Rᴇᴇʟ"
 HELP = """
