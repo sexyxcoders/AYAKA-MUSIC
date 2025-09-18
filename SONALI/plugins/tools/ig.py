@@ -1,70 +1,64 @@
 import re
-import requests
-from pyrogram import filters
-from pyrogram import Client
+import httpx
+from pyrogram import Client, filters
 from pyrogram.types import Message
-
 from SONALI import app
-from config import LOGGER_ID
+
+API_URL = "https://www.alphaapis.org/Instagram/dl/v1"
 
 
-@app.on_message(filters.command(["ig", "instagram", "reel"]))
-async def download_instagram_video(client, message):
-    if len(message.command) < 2:
-        await message.reply_text(
-            "Pʟᴇᴀsᴇ ᴘʀᴏᴠɪᴅᴇ ᴛʜᴇ Iɴsᴛᴀɢʀᴀᴍ ʀᴇᴇʟ URL ᴀғᴛᴇʀ ᴛʜᴇ ᴄᴏᴍᴍᴀɴᴅ"
-        )
-        return
-    url = message.text.split()[1]
-    if not re.match(
-        re.compile(r"^(https?://)?(www\.)?(instagram\.com|instagr\.am)/.*$"), url
-    ):
-        return await message.reply_text(
-            "Tʜᴇ ᴘʀᴏᴠɪᴅᴇᴅ URL ɪs ɴᴏᴛ ᴀ ᴠᴀʟɪᴅ Iɴsᴛᴀɢʀᴀᴍ URL😅😅"
-        )
-    a = await message.reply_text("ᴘʀᴏᴄᴇssɪɴɢ...")
-    api_url = f"https://insta-dl.hazex.workers.dev/?url={url}"
+async def fetch_instagram_media(instagram_url: str):
+    """Fetch media info from API"""
+    async with httpx.AsyncClient(timeout=15.0) as http:
+        response = await http.get(API_URL, params={"url": instagram_url})
+        response.raise_for_status()
+        return response.json()
 
-    response = requests.get(api_url)
+
+async def send_instagram_media(message: Message, url: str):
+    """Download and send Instagram media"""
+    processing_message = await message.reply_text("Pʀᴏᴄᴇssɪɴɢ...")
+
     try:
-        result = response.json()
-        data = result["result"]
-    except Exception as e:
-        f = f"Eʀʀᴏʀ :\n{e}"
-        try:
-            await a.edit(f)
-        except Exception:
-            await message.reply_text(f)
-            return await app.send_message(LOGGER_ID, f)
-        return await app.send_message(LOGGER_ID, f)
-    if not result["error"]:
-        video_url = data["url"]
-        duration = data["duration"]
-        quality = data["quality"]
-        type = data["extension"]
-        size = data["formattedSize"]
-        caption = f"Dᴜʀᴀᴛɪᴏɴ : {duration}\nQᴜᴀʟɪᴛʏ : {quality}\nTʏᴘᴇ : {type}\nSɪᴢᴇ : {size}"
-        await a.delete()
-        await message.reply_video(video_url, caption=caption)
-    else:
-        try:
-            return await a.edit("Fᴀɪʟᴇᴅ ᴛᴏ ᴅᴏᴡɴʟᴏᴀᴅ ʀᴇᴇʟ")
-        except Exception:
-            return await message.reply_text("Fᴀɪʟᴇᴅ ᴛᴏ ᴅᴏᴡɴʟᴏᴀᴅ ʀᴇᴇʟ")
+        data = await fetch_instagram_media(url)
+        results = data.get("result", [])
 
+        if not results:
+            return await processing_message.edit("⚠️ Nᴏ ᴍᴇᴅɪᴀ ғᴏᴜɴᴅ. Pʟᴇᴀsᴇ ᴄʜᴇᴄᴋ ᴛʜᴇ ʟɪɴᴋ.")
+
+        for item in results:
+            download_link = item.get("downloadLink")
+
+            if not download_link:
+                continue
+
+            if ".mp4" in download_link:
+                await message.reply_video(download_link)
+            elif any(ext in download_link for ext in (".jpg", ".jpeg", ".png", ".webp")):
+                await message.reply_photo(download_link)
+            else:
+                await message.reply_text(f"❌ Uɴsᴜᴘᴘᴏʀᴛᴇᴅ ᴍᴇᴅɪᴀ ᴛʏᴘᴇ: {download_link}")
+
+    except Exception as e:
+        await processing_message.edit(f"❌ Eʀʀᴏʀ: {e}")
+    finally:
+        await processing_message.delete()
+
+
+# Command handler (/ig or /insta)
+@app.on_message(filters.command(["ig", "insta"]))
+async def insta_download_command(client: Client, message: Message):
+    if len(message.command) < 2:
+        return await message.reply_text("❌ Usᴀɢᴇ /insta [Instagram URL]")
+
+    instagram_url = message.command[1]
+    await send_instagram_media(message, instagram_url)
+
+
+# Auto-detect Instagram URLs in any message
 @app.on_message(filters.regex(r"(https?://(?:www\.)?(?:instagram\.com|instagr\.am)/\S+)"))
 async def insta_download_auto(client: Client, message: Message):
     match = re.search(r"(https?://(?:www\.)?(?:instagram\.com|instagr\.am)/\S+)", message.text)
     if match:
         instagram_url = match.group(1)
         await send_instagram_media(message, instagram_url)
-
-
-MODULE = "Rᴇᴇʟ"
-HELP = """
-ɪɴsᴛᴀɢʀᴀᴍ ʀᴇᴇʟ ᴅᴏᴡɴʟᴏᴀᴅᴇʀ:
-
-• /ig [URL]: ᴅᴏᴡɴʟᴏᴀᴅ ɪɴsᴛᴀɢʀᴀᴍ ʀᴇᴇʟs. Pʀᴏᴠɪᴅᴇ ᴛʜᴇ ɪɴsᴛᴀɢʀᴀᴍ ʀᴇᴇʟ URL ᴀғᴛᴇʀ ᴛʜᴇ ᴄᴏᴍᴍᴀɴᴅ.
-• /instagram [URL]: ᴅᴏᴡɴʟᴏᴀᴅ ɪɴsᴛᴀɢʀᴀᴍ ʀᴇᴇʟs. Pʀᴏᴠɪᴅᴇ ᴛʜᴇ ɪɴsᴛᴀɢʀᴀᴍ ʀᴇᴇʟ URL ᴀғᴛᴇʀ ᴛʜᴇ ᴄᴏᴍᴍᴀɴᴅ.
-• /reel [URL]: ᴅᴏᴡɴʟᴏᴀᴅ ɪɴsᴛᴀɢʀᴀᴍ ʀᴇᴇʟs. Pʀᴏᴠɪᴅᴇ ᴛʜᴇ ɪɴsᴛᴀɢʀᴀᴍ ʀᴇᴇʟ URL ᴀғᴛᴇʀ ᴛʜᴇ ᴄᴏᴍᴍᴀɴᴅ.
-"""
