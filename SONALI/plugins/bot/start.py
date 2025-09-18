@@ -1,4 +1,4 @@
-import asyncio 
+import asyncio
 import time
 import random
 import config
@@ -9,9 +9,10 @@ from pyrogram.types import InlineKeyboardMarkup, Message
 
 from SONALI import app
 from SONALI.misc import _boot_
-from SONALI.utils.database import get_served_chats, get_served_users, get_sudoers
-from SONALI.utils import bot_sys_stats
 from SONALI.utils.database import (
+    get_served_chats,
+    get_served_users,
+    get_sudoers,
     add_served_chat,
     add_served_user,
     blacklisted_chats,
@@ -19,6 +20,7 @@ from SONALI.utils.database import (
     is_banned_user,
     is_on_off,
 )
+from SONALI.utils import bot_sys_stats
 from SONALI.utils.decorators.language import LanguageStart
 from SONALI.utils.formatters import get_readable_time
 from SONALI.utils.inline import private_panel, start_panel
@@ -29,9 +31,15 @@ from strings import get_string
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
 async def start_pm(client, message: Message, _):
+    # Send loading animation
     loading_1 = await message.reply_text(random.choice(GREET))
     await add_served_user(message.from_user.id)
-    await message.react("🍓")
+
+    # Multiple random reactions 🍓
+    reactions = ["🍓", "✨", "🌸", "💎", "🌹", "🍫"]
+    for reaction in random.sample(reactions, k=3):  # send 3 random reactions
+        await message.react(reaction)
+        await asyncio.sleep(0.3)
 
     for dots in ["", ".", "..", "..."]:
         await loading_1.edit_text(f"<b>ʟᴏᴀᴅɪɴɢ{dots}</b>")
@@ -39,6 +47,7 @@ async def start_pm(client, message: Message, _):
 
     await loading_1.delete()
 
+    # Start command with args
     if len(message.text.split()) > 1:
         ...
     else:
@@ -47,16 +56,19 @@ async def start_pm(client, message: Message, _):
         async def send_start_panel():
             await message.reply_photo(
                 photo=START_IMAGE,
-                caption=_["start_2"].format(message.from_user.mention, "", "", "", "", "", ""),
+                caption=_["start_2"].format(
+                    message.from_user.mention, "", "", "", "", "", ""
+                ),
                 reply_markup=InlineKeyboardMarkup(out),
                 has_spoiler=True,  # 👈 spoiler effect on image
             )
 
         asyncio.create_task(send_start_panel())
 
+        # Log user start
         if await is_on_off(2):
             await app.send_message(
-                chat_id=config.LOGGER_ID,
+                chat_id=LOGGER_ID,
                 text=(
                     f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ.\n\n"
                     f"<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n"
@@ -92,12 +104,14 @@ async def welcome(client, message: Message):
             language = await get_lang(message.chat.id)
             _ = get_string(language)
 
+            # If banned user joins, kick them
             if await is_banned_user(member.id):
                 try:
                     await message.chat.ban_member(member.id)
                 except:
                     pass
 
+            # If bot joins a new chat
             if member.id == app.id:
                 if message.chat.type != ChatType.SUPERGROUP:
                     await message.reply_text(_["start_4"])
@@ -108,7 +122,7 @@ async def welcome(client, message: Message):
                         _["start_5"].format(
                             app.mention,
                             f"https://t.me/{app.username}?start=sudolist",
-                            config.SUPPORT_CHAT,
+                            SUPPORT_CHAT,
                         ),
                         disable_web_page_preview=True,
                     )
@@ -116,7 +130,7 @@ async def welcome(client, message: Message):
 
                 out = start_panel(_)
 
-async def send_welcome_panel():
+                async def send_welcome_panel():
                     await message.reply_photo(
                         photo=START_IMAGE,
                         caption=_["start_3"].format(
