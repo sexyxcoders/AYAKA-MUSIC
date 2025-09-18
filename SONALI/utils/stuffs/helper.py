@@ -5,9 +5,9 @@ class Helper(object):
 ᴀsᴋ ʏᴏᴜʀ ᴅᴏᴜʙᴛs ᴀᴛ sᴜᴘᴘᴏʀᴛ ᴄʜᴀᴛ
 
 ᴀʟʟ ᴄᴏᴍᴍᴀɴᴅs ᴄᴀɴ ʙᴇ ᴜsᴇᴅ ᴡɪᴛʜ : /'''
-    HELP_ChatGPT = '''CʜᴀᴛGPT
+    HELP_ChatGPT = '''Cʜᴀɢᴛᴘᴛ
 
-CʜᴀᴛGPT ᴄᴏᴍᴍᴀɴᴅꜱ:
+Cʜᴀɢᴛᴘᴛ ᴄᴏᴍᴍᴀɴᴅꜱ:
 
 /ask ➠ ǫᴜᴇʀɪᴇs ᴛʜᴇ ᴀɪ ᴍᴏᴅᴇʟ ᴛᴏ ɢᴇᴛ ᴀ ʀᴇsᴘᴏɴsᴇ ᴛᴏ ʏᴏᴜʀ ǫᴜᴇsᴛɪᴏɴ.
 '''
@@ -24,13 +24,13 @@ CʜᴀᴛGPT ᴄᴏᴍᴍᴀɴᴅꜱ:
 
 sᴛɪᴄᴋᴇʀs ᴄᴏᴍᴍᴀɴᴅꜱ:
 
-/packkang ➠ ᴄʀᴇᴀᴛᴇs ᴀ ᴘᴀᴄᴋ ᴏғ sᴛɪᴄᴋᴇʀs ғʀᴏᴍ ᴀ ᴏᴛʜᴇʀ ᴘᴀᴄᴋ
-.
+/packkang ➠ ᴄʀᴇᴀᴛᴇs ᴀ ᴘᴀᴄᴋ ᴏғ sᴛɪᴄᴋᴇʀs ғʀᴏᴍ ᴀ ᴏᴛʜᴇʀ ᴘᴀᴄᴋ.
+
 /stickerid ➠ ɢᴇᴛs ᴛʜᴇ sᴛɪᴄᴋᴇʀ ɪᴅ ᴏғ ᴀ sᴛɪᴄᴋᴇʀ.
 
 /kang ➠ ᴜsᴇ ᴛʜɪs ᴄᴏᴍᴍᴀɴᴅ ᴀɴʏ sᴛɪᴄᴋᴇʀ ʀᴇᴘʟʏ ᴀɴᴅ ᴄʀᴇᴀᴛᴇ ʏᴏᴜʀ ᴏᴡɴ ᴘᴀᴄᴋ.
 
-/mmf ➠ ʀᴇʟᴘʏ ᴀɴʏ sᴛɪᴄᴋᴇʀ ɢᴇᴛ ᴀ ɴᴇᴡ ɴᴀᴍᴇ ʟɪᴋᴇ /mmf RAJABABU 
+/mmf ➠ ʀᴇʟᴘʏ ᴀɴʏ sᴛɪᴄᴋᴇʀ ɢᴇᴛ ᴀ ɴᴇᴡ ɴᴀᴍᴇ ʟɪᴋᴇ /mmf Ayaka 
 '''
 
     HELP_TagAll = '''Tᴀɢ
@@ -88,8 +88,6 @@ Exᴛʀᴀ ᴄᴏᴍᴍᴀɴᴅꜱ:
 ⦿ /tgm ➠ ᴜᴘʟᴏᴀᴅs ᴀ ᴘʜᴏᴛᴏ (ᴜɴᴅᴇʀ 𝟻ᴍʙ) ᴛᴏ ᴛʜᴇ ᴄʟᴏᴜᴅ ᴀɴᴅ ɢɪᴠᴇs ᴀ ʟɪɴᴋ.
 ⦿ /tr ➠ ᴛʀᴀɴsʟᴀᴛᴇs ᴛᴇxᴛ.
 ⦿ /google ➠ sᴇᴀʀᴄʜᴇs ғᴏʀ ɪɴғᴏʀᴍᴀᴛɪᴏɴ ᴏɴ ɢᴏᴏɢʟᴇ.
-⦿ /gemini ➠ ᴀʙᴏᴜᴛ ᴀɴʏ ǫᴜᴇʀʏ ᴇx - /gemini lord ram.
-⦿ /image ➠ ᴇx - /image lord ram ᴅᴏᴡɴʟᴏᴀᴅ ᴀɴʏ ɪᴍᴀɢᴇs.
 ⦿ /reel ➠ ᴅᴏᴡɴʟᴏᴀᴅ ɪɴsᴛᴀɢʀᴀᴍ ʀᴇᴇʟs ᴇx - /reel INSTAGRAM REEL LINK
 ⦿ /afk ➠  Wɪᴛʜ ᴛʜɪs ʏᴏᴜ ᴄᴀɴ sᴇᴇ ᴀғᴛᴇʀ ʜᴏᴡ ʟᴏɴɢ ʏᴏᴜ ᴀʀᴇ ᴄᴏᴍɪɴɢ ᴏɴʟɪɴᴇ.
 '''
@@ -110,8 +108,6 @@ Admins only:
  ❍ /mute <userhandle>: silences a user. Can also be used as a reply, muting the replied to user.
  ❍ /tmute <userhandle> x(m/h/d): mutes a user for x time. (via handle, or reply). m = minutes, h = hours, d = days.
  ❍ /unmute <userhandle>: unmutes a user. Can also be used as a reply, muting the replied to user.
-__
-𝐒ᴘᴇᴄɪᴀʟ 𝐂ᴏᴍᴍᴀɴᴅs 𝐒ᴜᴘᴘᴏʀᴛ 𝐀ʟʟ 𝐄xᴀᴍᴘʟᴇ  -  Sonali 𝚋𝚊𝚗 Sonali 𝚖𝚞𝚝𝚎 Sonali 𝚙𝚛𝚘𝚖𝚘𝚝𝚎 ..... 𝚎𝚝𝚌
 '''
     HELP_Search = '''Sᴇᴀʀᴄʜ
 
@@ -120,7 +116,6 @@ Sᴇᴀʀᴄʜ ᴄᴏᴍᴍᴀɴᴅꜱ:
 • /google <query> : Search the google for the given query.
 • /app <query>  : Search playstore apps for the given query.
 • /stack <query>  : Search stackoverflow for the given query.
-• /image (/imgs) <query> : Get the images regarding to your query
 
 Example:
 /google hindi songs: return top 5 reuslts.
@@ -151,7 +146,5 @@ Example:
 
 ʜᴇʀᴇ ɪs ᴛʜᴇ ʜᴇʟᴘ ғᴏʀ ᴛʜᴇ ᴄᴏᴜᴘʟᴇs ᴍᴏᴅᴜʟᴇ:
 
-◌ /wish : ᴀᴅᴅ ʏᴏᴜʀ ᴡɪsʜ ᴀɴᴅ sᴇᴇ ɪᴛs ᴘᴏssɪʙɪʟɪᴛʏ!
-◌ /love : ᴀᴅᴅ ᴛᴡᴏ ɴᴀᴍᴇs ᴀɴᴅ sᴇᴇ ʟᴏᴠᴇ ᴘᴏssɪʙɪʟɪᴛʏ! ʟɪᴋᴇ ʀᴀᴊᴀ + sᴏɴᴀ
 ◌ /couples : ᴜsᴇ ᴛʜɪs ᴄᴏᴍᴍᴀɴᴅ ᴀɴᴅ sᴇᴇ ɢʀᴏᴜᴘs ᴄᴏᴜᴘʟᴇs.
 '''
