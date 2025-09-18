@@ -2,7 +2,7 @@ import asyncio
 import time
 import random
 import config
-from config import LOGGER_ID, BANNED_USERS, GREET, SUPPORT_CHAT, START_IMAGE
+from config import LOGGER_ID, BANNED_USERS, GREET, SUPPORT_CHAT, START_IMG_URL
 from pyrogram import filters
 from pyrogram.enums import ChatType
 from pyrogram.types import InlineKeyboardMarkup, Message
