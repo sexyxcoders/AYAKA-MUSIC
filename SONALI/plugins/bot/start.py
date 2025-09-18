@@ -2,7 +2,7 @@ import asyncio
 import time
 import random
 import config
-from config import LOGGER_ID, BANNED_USERS, GREET, SUPPORT_CHAT
+from config import LOGGER_ID, BANNED_USERS, GREET, SUPPORT_CHAT, START_IMAGE
 from pyrogram import filters
 from pyrogram.enums import ChatType
 from pyrogram.types import InlineKeyboardMarkup, Message
@@ -25,12 +25,6 @@ from SONALI.utils.inline import private_panel, start_panel
 from strings import get_string
 
 
-START_VIDS = [
-    "BAACAgUAAxkBAAIoZGjLJkqG7KXOtwjdg-517Y5a0LdWAAI7JAACelNYVqtEqxscnpTGHgQ",
-    "BAACAgUAAxkBAAIoYmjLJi0ZnXdn9Lws5maiSj1s0231AAI5JAACelNYVkaPVJ0IXdaIHgQ",
-    "BAACAgUAAxkBAAIoYGjLJgtN95ogNn0713K7xtAzm0gVAAI4JAACelNYVviTFt5bQXDYHgQ"
-]
-
 # --------------------- PRIVATE START --------------------- #
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
@@ -50,15 +44,12 @@ async def start_pm(client, message: Message, _):
     else:
         out = private_panel(_)
 
-        #await message.reply_sticker(sticker=random.choice(STICKERS))
-
         async def send_start_panel():
-            await message.reply_video(
-                video=random.choice(START_VIDS),   # file_id from your bot
-                caption=_["start_2"].format(message.from_user.mention,
-                    "", "", "", "", "", ""
-                ),
+            await message.reply_photo(
+                photo=START_IMAGE,
+                caption=_["start_2"].format(message.from_user.mention, "", "", "", "", "", ""),
                 reply_markup=InlineKeyboardMarkup(out),
+                has_spoiler=True,  # 👈 spoiler effect on image
             )
 
         asyncio.create_task(send_start_panel())
@@ -82,10 +73,11 @@ async def start_gp(client, message: Message, _):
     uptime = int(time.time() - _boot_)
 
     async def send_group_panel():
-        await message.reply_video(
-            video=random.choice(START_VIDS),  # file_id from your bot
+        await message.reply_photo(
+            photo=START_IMAGE,
             caption=_["start_1"].format(app.mention, get_readable_time(uptime)),
             reply_markup=InlineKeyboardMarkup(out),
+            has_spoiler=True,  # 👈 spoiler effect on image
         )
 
     asyncio.create_task(send_group_panel())
@@ -124,9 +116,9 @@ async def welcome(client, message: Message):
 
                 out = start_panel(_)
 
-                async def send_welcome_panel():
-                    await message.reply_video(
-                        video=random.choice(START_VIDS),
+async def send_welcome_panel():
+                    await message.reply_photo(
+                        photo=START_IMAGE,
                         caption=_["start_3"].format(
                             message.from_user.mention,
                             app.mention,
@@ -134,6 +126,7 @@ async def welcome(client, message: Message):
                             app.mention,
                         ),
                         reply_markup=InlineKeyboardMarkup(out),
+                        has_spoiler=True,  # 👈 spoiler effect on image
                     )
 
                 asyncio.create_task(send_welcome_panel())
@@ -142,12 +135,3 @@ async def welcome(client, message: Message):
 
         except Exception as ex:
             print(ex)
-
-
-# --------------------- FILE_ID HELPER --------------------- #
-# Send any video to your bot in private to get its file_id
-@app.on_message(filters.video & filters.private)
-async def get_file_id(client, message: Message):
-    file_id = message.video.file_id
-    print("Video file_id:", file_id)  # also logs in console
-    await message.reply_text(f"✅ Your video file_id:\n<code>{file_id}</code>")
