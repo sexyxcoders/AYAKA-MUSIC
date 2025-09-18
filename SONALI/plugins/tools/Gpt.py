@@ -12,7 +12,7 @@ from SONALI import app
 # ----------------------------
 # OpenAI Config
 # ----------------------------
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY","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")
 openai_client = AsyncOpenAI(api_key=OPENAI_API_KEY)
 
 # ----------------------------
