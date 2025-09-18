@@ -6,3 +6,4 @@ from .settings import *
 from .speed import *
 from .start import *
 from .sudolist import *
+from .queue import aq_markup *
