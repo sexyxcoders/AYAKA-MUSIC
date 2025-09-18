@@ -87,7 +87,7 @@ confirmer = {}
 
 GREET = [ "💌", "❣️", "❤️" ]
 
-START_IMG_URL = "https://files.catbox.moe/qgmsa7.jpg"
+START_IMG_URL = "https://files.catbox.moe/we2hw5.jpg"
 PING_IMG_URL = "https://files.catbox.moe/yybpvb.jpg"
 PLAYLIST_IMG_URL = "https://files.catbox.moe/tj7a58.jpg"
 STATS_IMG_URL = "https://files.catbox.moe/yqu9d2.jpg"
