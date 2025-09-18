@@ -17,6 +17,7 @@ pillow==9.5.0
 psutil
 google-api-python-client
 openai>=1.0.0
+lexica-api
 deepai
 edge-tts
 py-tgcalls==0.9.7
