@@ -26,12 +26,7 @@ from SONALI.utils.formatters import get_readable_time
 from SONALI.utils.inline import private_panel, start_panel
 from strings import get_string
 
-EFFECT_ID = [
-    5046509860389126442,
-    5107584321108051014,
-    5104841245755180586,
-    5159385139981059251,
-]
+
 
 
 # --------------------- PRIVATE START --------------------- #
@@ -61,7 +56,6 @@ async def start_pm(client, message: Message, _):
                     message.from_user.mention, "", "", "", "", "", ""
                 ),
                 reply_markup=InlineKeyboardMarkup(out),
-                message_effect_id=random.choice(EFFECT_ID),
                 has_spoiler=True,  # 👈 spoiler effect on image
             )
 
