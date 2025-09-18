@@ -1,6 +1,8 @@
 import re
 import requests
 from pyrogram import filters
+from pyrogram import Client
+from pyrogram.types import Message
 
 from SONALI import app
 from config import LOGGER_ID
