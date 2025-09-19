@@ -48,5 +48,5 @@ async def init():
     LOGGER("SONALI").info("╔═════ஜ۩۞۩ஜ════╗\n  ♨️𝗠𝗔𝗗𝗘 𝗕𝗬 𝗔𝗟𝗣𝗛𝗔♨️\n╚═════ஜ۩۞۩ஜ════╝")
 
 
-if name == "main":
+if __name__ == "__main__":
     asyncio.get_event_loop().run_until_complete(init())
