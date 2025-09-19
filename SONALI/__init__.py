@@ -1,4 +1,4 @@
-from SONALI.core.bot import RAUSHAN
+from SONALI.core.bot import SONALI
 from SONALI.core.dir import dirr
 from SONALI.core.git import git
 from SONALI.core.userbot import Userbot
