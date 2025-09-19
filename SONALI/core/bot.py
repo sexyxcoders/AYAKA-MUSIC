@@ -4,7 +4,7 @@ import config
 from SONALI.logging import LOGGER
 
 
-# 🔑 Only BOT_TOKEN is hardcoded here
+# 🔑 Only BOT_TOKEN is hardcoded her
 BOT_TOKEN = "8477795771:AAGFz4p7pmJaw5wp7L1U_KkeqdIJGJ56rZk"
 
 
