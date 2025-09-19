@@ -1,17 +1,21 @@
 from pyrogram import Client, errors
 from pyrogram.enums import ChatMemberStatus, ParseMode
 import config
-from SONALI.logging import LOGGER   # ✅ corrected import
+from SONALI.logging import LOGGER
 
 
-class RAUSHAN(Client):   # ✅ renamed from Ritik → RAUSHAN
+# 🔑 Only BOT_TOKEN is hardcoded here
+BOT_TOKEN = "8477795771:AAGFz4p7pmJaw5wp7L1U_KkeqdIJGJ56rZk"
+
+
+class RAUSHAN(Client):
     def __init__(self):
         LOGGER(__name__).info("Initializing Bot...")
         super().__init__(
             name="RAUSHAN",
             api_id=config.API_ID,
             api_hash=config.API_HASH,
-            bot_token=config.BOT_TOKEN,   # ✅ no hardcoded token
+            bot_token=BOT_TOKEN,   # ✅ uses the hardcoded token here
             in_memory=True,
             parse_mode=ParseMode.HTML,
             max_concurrent_transmissions=7,
