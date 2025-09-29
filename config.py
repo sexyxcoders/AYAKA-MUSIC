@@ -13,11 +13,11 @@ API_HASH = getenv("API_HASH","f700ddb0930acfab095b00911a2e6f3a")
 # Get your token from @BotFather on Telegram.
 BOT_TOKEN = getenv("BOT_TOKEN", "8477795771:AAGFz4p7pmJaw5wp7L1U_KkeqdIJGJ56rZk")
 # -------------------------------------------------------
-OWNER_USERNAME = getenv("OWNER_USERNAME","x9Ahad")
+OWNER_USERNAME = getenv("OWNER_USERNAME", "x9Ahad")
 # --------------------------------------------------------
-BOT_USERNAME = getenv("BOT_USERNAME","AyakaXMusicBot")
+BOT_USERNAME = getenv("BOT_USERNAME", "AyakaXMusicBot")
 # --------------------------------------------------------
-BOT_NAME = getenv("BOT_NAME","˹ Ａʏᴀᴋᴀ ꭗ‌ Ｍᴜsɪᴄ  ˼")
+BOT_NAME = getenv("BOT_NAME", "˹ Ａʏᴀᴋᴀ ꭗ‌ Ｍᴜsɪᴄ  ˼")
 # ---------------------------------------------------------
 
 
@@ -27,10 +27,10 @@ MONGO_DB_URI = getenv("MONGO_DB_URI", "mongodb+srv://ahad0181888:ahad0181888@clu
 DURATION_LIMIT_MIN = int(getenv("DURATION_LIMIT", 17000))
 
 # Chat id of a group for logging bot's activities
-LOGGER_ID = int(getenv("LOGGER_ID","-1002847095020"))
+LOGGER_ID = int(getenv("LOGGER_ID", "-1002847095020"))
 
 # Get this value from on Telegram by /id
-OWNER_ID = int(getenv("OWNER_ID","8195241636"))
+OWNER_ID = int(getenv("OWNER_ID", "8195241636"))
 
 
 ## Fill these variables if you're deploying on heroku.
