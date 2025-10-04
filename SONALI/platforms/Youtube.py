@@ -17,7 +17,7 @@ from SONALI.utils.formatters import time_to_seconds
 
 # --- YOUR API CONFIGURATION ---
 # IMPORTANT: Replace "YOUR_API_KEY" with your actual API key
-API_KEY = os.getenv("API_KEY", "YOUR_API_KEY") 
+API_KEY = os.getenv("API_KEY", "tnc_9a13260003bfaa27f9432cd47c0491bb") 
 API_BASE_URL = "https://tnc-api.me/api/v1"
 # --- END OF CONFIGURATION ---
 
